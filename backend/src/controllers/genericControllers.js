@@ -5,6 +5,7 @@ const GenericController = {
     const { table } = req.params;
     GenericModel.getAll(table, (err, results) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: `Erreur lors de la récupération des données de la table ${table}`,
         });
@@ -17,6 +18,7 @@ const GenericController = {
     const { table, id } = req.params;
     GenericModel.getById(table, id, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: `Erreur lors de la récupération de l'enregistrement avec l'ID ${id} dans ${table}`,
         });
@@ -30,6 +32,7 @@ const GenericController = {
     const data = req.body;
     GenericModel.create(table, data, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: `Erreur lors de l'insertion dans la table ${table}`,
         });
@@ -46,6 +49,7 @@ const GenericController = {
     const data = req.body;
     GenericModel.update(table, id, data, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: `Erreur lors de la mise à jour de l'enregistrement avec l'ID ${id} dans ${table}`,
         });
@@ -60,6 +64,7 @@ const GenericController = {
     const { table, id } = req.params;
     GenericModel.delete(table, id, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: `Erreur lors de la suppression de l'enregistrement avec l'ID ${id} dans ${table}`,
         });
