@@ -1,0 +1,14 @@
+{
+  "name": "job-board",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "prettier": "^3.3.3"
+  }
+}
