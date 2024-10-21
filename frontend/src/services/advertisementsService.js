@@ -1,17 +1,17 @@
-export const getAllAdvertisements = async () => {
-  try {
-    const response = await fetch("http://localhost:3001/api/advertisements", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Erreur lors de la création de l'advertisement");
-    }
-    const datas = await response.json();
-    return datas;
-  } catch (error) {
-    console.log("Erreur :", error);
-  }
+export const filterTable = (table, filter) => {
+  let filteredTable = table.filter(
+    (obj) =>
+      obj.title
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .includes(
+          filter.title
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase(),
+        ) && obj.salary >= filter.salary,
+  );
+
+  return filteredTable;
 };

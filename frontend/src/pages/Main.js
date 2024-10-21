@@ -1,60 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { getAllCompanies } from "../services/companiesService";
-import { getAllAdvertisements } from "../services/advertisementsService";
-import { getCompanyByAdvertisement } from "../services/companiesService";
+import JobList from "../components/JobList";
+import FilterBar from "../components/FilterBar";
+import DetailedJob from "../components/DetailedJob";
+import Header from "../components/Header";
 
 const Main = () => {
-  const [advertisements, setAdvertisements] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [loadingAdv, setLoadingAdv] = useState(true);
-  const [loadingComp, setLoadingComp] = useState(true);
-
-  const fetchAdvertisements = async () => {
-    try {
-      const datas = await getAllAdvertisements();
-      setAdvertisements(datas);
-      setLoadingAdv(false);
-    } catch (error) {
-      console.log("Erreur lors du chargement des données", error);
-      setLoadingAdv(false);
-    }
-  };
-
-  const fetchCompanies = async () => {
-    try {
-      const companiesData = await getAllCompanies();
-      setCompanies(companiesData);
-      setLoadingComp(false);
-    } catch (error) {
-      console.log("Erreur lors du chargement des données", error);
-      setLoadingComp(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAdvertisements();
-    fetchCompanies();
-  }, []);
   return (
-    <div className="grid grid-cols-2 gap-6 [&>div]:rounded-xl [&>div]:border-2 [&>div]:border-black">
-      <div>
-        {loadingAdv || loadingComp ? (
-          <p>Loading...</p>
-        ) : (
-          advertisements.map((advertisement) => (
-            <div key={advertisement.advertisement_id}>
-              <h1>{advertisement.title}</h1>
-              <p>{advertisement.description}</p>
-              <p>{advertisement.salary}</p>
-              <p>{advertisement.location}</p>
-              <p className="text-green-500">
-                {getCompanyByAdvertisement(advertisement, companies).name}
-              </p>
-            </div>
-          ))
-        )}
+    <div className="bg-mywhite flex min-h-screen flex-col items-center justify-center gap-3 md:gap-6">
+      <div className="w-11/12 md:w-3/4">
+        <Header />
       </div>
-      <div></div>
+      <div className="main-template grid h-[82vh] w-11/12 grid-cols-2 grid-rows-[80px_1fr] gap-3 md:w-3/4 md:gap-6">
+        <div
+          className="neobrutalism bg-mygreen flex items-center p-3 md:p-6"
+          style={{ gridArea: "a" }}
+        >
+          <FilterBar />
+        </div>
+        <div
+          className="neobrutalism bg-mygreen !col-span-2 h-full overflow-y-scroll bg-right p-3 md:!col-auto md:mb-auto md:p-6"
+          style={{ gridArea: "b" }}
+        >
+          <JobList />
+          <div
+            className="sticky bottom-0 mt-3 md:hidden md:h-auto"
+            style={{ gridArea: "c" }}
+          >
+            <DetailedJob />
+          </div>
+        </div>
+        <div
+          className="neobrutalism bg-mygreen hidden h-auto p-3 md:block md:p-6"
+          style={{ gridArea: "c" }}
+        >
+          <DetailedJob />
+        </div>
+      </div>
     </div>
   );
 };
